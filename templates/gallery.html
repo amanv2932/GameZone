@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Gallery • GameZone{% endblock %}
+{% block content %}
+<section class="page-hero">
+    <div class="container">
+        <p class="eyebrow">Image showcase</p>
+        <h1>Gallery</h1>
+        <p class="hero-text hero-text-narrow">This page now uses the project images as a proper visual grid with context, genres, and platform notes instead of plain image blocks.</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="gallery-grid gallery-grid-rich">
+            {% for game in games %}
+                <article class="gallery-card">
+                    <img src="{% static game.image %}" alt="{{ game.name }}" onerror="this.onerror=null;this.src='{% static 'image/placeholder.svg' %}';">
+                    <div class="gallery-card-body">
+                        <span class="chip">{{ game.tag }}</span>
+                        <h3>{{ game.name }}</h3>
+                        <p>{{ game.description }}</p>
+                        <small>{{ game.genre }} • {{ game.platforms }}</small>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

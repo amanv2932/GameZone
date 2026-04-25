@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Login • GameZone{% endblock %}
+{% block content %}
+<section class="page-hero">
+    <div class="container">
+        <p class="eyebrow">Access</p>
+        <h1>Login</h1>
+        <p class="hero-text hero-text-narrow">Use the fixed credentials to log in. Any other userid or password is always invalid.</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container login-wrap">
+        <div class="form-panel">
+            <form method="post" class="contact-form">
+                {% csrf_token %}
+                <div class="field-group">
+                    <label for="userid">User ID</label>
+                    <input id="userid" name="userid" type="text" placeholder="Enter userid" autocomplete="username" required>
+                </div>
+                <div class="field-group">
+                    <label for="password">Password</label>
+                    <input id="password" name="password" type="password" placeholder="Enter password" autocomplete="current-password" required>
+                </div>
+                {% if error_message %}
+                    <div class="form-errors">{{ error_message }}</div>
+                {% endif %}
+                <button type="submit" class="btn">Login</button>
+            </form>
+        </div>
+        <div class="content-panel">
+            <h2>Credential Rules</h2>
+            <p class="panel-note">Accepted userid: <strong>aman</strong></p>
+            <p class="panel-note">Accepted password: <strong>123</strong></p>
+            <p class="panel-note">Any other value is rejected as invalid.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

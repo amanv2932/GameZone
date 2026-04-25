@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}GameZone{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}GameZone — curated hub for games and galleries.{% endblock %}">
+    <meta name="theme-color" content="#09111f">
+
+    <meta property="og:title" content="{% block og_title %}GameZone{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}GameZone — curated hub for games and galleries.{% endblock %}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:image" content="{% static 'image/favicon.svg' %}">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="icon" href="{% static 'image/favicon.svg' %}" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="{% static 'image/favicon.svg' %}">
+
+    <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<header class="site-header" role="banner">
+    <div class="container">
+        <nav class="navbar" role="navigation" aria-label="Main Navigation">
+            <a class="nav-brand" href="{% url 'home' %}">
+                <span class="nav-brand-mark">GZ</span>
+                <span>
+                    GameZone
+                    <small>Pure Django showcase</small>
+                </span>
+            </a>
+            <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="primary-navigation">Menu</button>
+            <ul id="primary-navigation" class="nav-links">
+                <li><a href="{% url 'home' %}" class="nav-item" {% if request.resolver_match.url_name == 'home' %}aria-current="page"{% endif %}>Home</a></li>
+                <li><a href="{% url 'aboutus' %}" class="nav-item" {% if request.resolver_match.url_name == 'aboutus' %}aria-current="page"{% endif %}>About</a></li>
+                <li><a href="{% url 'gallery' %}" class="nav-item" {% if request.resolver_match.url_name == 'gallery' %}aria-current="page"{% endif %}>Gallery</a></li>
+                <li><a href="{% url 'blog' %}" class="nav-item" {% if request.resolver_match.url_name == 'blog' %}aria-current="page"{% endif %}>Blog</a></li>
+                <li><a href="{% url 'contactus' %}" class="nav-item" {% if request.resolver_match.url_name == 'contactus' %}aria-current="page"{% endif %}>Contact</a></li>
+                {% if request.session.is_logged_in %}
+                    <li><a href="{% url 'logout' %}" class="nav-item nav-item-logout">Logout</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main id="main-content" class="site-content" tabindex="-1" role="main">
+    {% if messages %}
+        <div class="container message-stack" aria-live="polite">
+            {% for message in messages %}
+                <div class="site-message {{ message.tags|default:'info' }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer" role="contentinfo">
+    <div class="container footer-grid">
+        <div>
+            <p class="footer-brand">GameZone</p>
+            <p class="footer-copy">Browse standout games, sharp visuals, and quick reads in one place.</p>
+        </div>
+        <div class="footer-links">
+            <a href="{% url 'aboutus' %}">About</a>
+            <a href="{% url 'gallery' %}">Gallery</a>
+            <a href="{% url 'blog' %}">Blog</a>
+            <a href="{% url 'contactus' %}">Contact</a>
+            {% if request.session.is_logged_in %}
+                <a href="{% url 'logout' %}">Logout</a>
+            {% endif %}
+        </div>
+    </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+    var btn = document.querySelector('.nav-toggle');
+    var links = document.getElementById('primary-navigation');
+    if(btn && links){
+        btn.addEventListener('click', function(){
+            var isOpen = links.classList.toggle('open');
+            btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+        document.addEventListener('click', function(e){
+            if (!btn.contains(e.target) && !links.contains(e.target) && links.classList.contains('open')) {
+                links.classList.remove('open');
+                btn.setAttribute('aria-expanded', 'false');
+            }
+        });
+        document.addEventListener('keydown', function(e){
+            if (e.key === 'Escape' && links.classList.contains('open')) {
+                links.classList.remove('open');
+                btn.setAttribute('aria-expanded', 'false');
+                btn.focus();
+            }
+        });
+    }
+});
+</script>
+
+</body>
+</html>

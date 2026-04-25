@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home • GameZone{% endblock %}
+{% block meta_description %}Explore a polished Django-only gaming showcase with featured titles, curated sections, and a strong visual layout.{% endblock %}
+{% block content %}
+<section class="hero-section">
+    <div class="container hero-grid">
+        <div class="hero-copy">
+            <p class="eyebrow">Game showcase</p>
+            <h1>Discover popular games across action, racing, strategy, sports, and open worlds.</h1>
+            <p class="hero-text">GameZone is built for browsing. Jump through a larger lineup, enjoy cleaner visuals, and explore more game cards, gallery sections, and highlight panels across the site.</p>
+            <div class="hero-actions">
+                <a class="btn" href="{% url 'gallery' %}">Explore Gallery</a>
+            </div>
+        </div>
+        <div class="hero-panel">
+            <div class="hero-panel-copy">
+                <p class="panel-label">{{ spotlight_game.tag }}</p>
+                <h2>{{ spotlight_game.name }}</h2>
+                <p>{{ spotlight_game.description }}</p>
+                <span>{{ spotlight_game.genre }} • {{ spotlight_game.platforms }}</span>
+            </div>
+            <img src="{% static spotlight_game.image %}" alt="{{ spotlight_game.name }}" onerror="this.onerror=null;this.src='{% static 'image/placeholder.svg' %}';">
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section-heading">
+            <p class="eyebrow">Featured Games</p>
+            <h2>Recognizable titles, presented with more personality</h2>
+            <p>Explore a bigger mix of fan favorites, competitive hits, and cinematic adventures.</p>
+        </div>
+        <div class="game-grid">
+            {% for game in featured_games %}
+                <article class="game-card">
+                    <img src="{% static game.image %}" alt="{{ game.name }}" onerror="this.onerror=null;this.src='{% static 'image/placeholder.svg' %}';">
+                    <div class="game-card-body">
+                        <span class="chip">{{ game.tag }}</span>
+                        <h3>{{ game.name }}</h3>
+                        <p>{{ game.description }}</p>
+                        <small>{{ game.genre }} • {{ game.platforms }}</small>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section section-contrast">
+    <div class="container split-layout">
+        <div>
+            <p class="eyebrow">Trending Right Now</p>
+            <h2>More games, more variety, and stronger visual sections</h2>
+            <p class="hero-text">From fantasy epics to tactical shooters and football nights, the collection now stretches much further than the original small set.</p>
+        </div>
+        <div class="mini-gallery">
+            {% for game in trending_games %}
+                <article class="mini-gallery-card">
+                    <img src="{% static game.image %}" alt="{{ game.name }}" onerror="this.onerror=null;this.src='{% static 'image/placeholder.svg' %}';">
+                    <div>
+                        <h3>{{ game.name }}</h3>
+                        <p>{{ game.genre }} • {{ game.platforms }}</p>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section-heading">
+            <p class="eyebrow">Fresh Reading</p>
+            <h2>Static blog previews that still feel editorial</h2>
+        </div>
+        <div class="posts-grid">
+            {% for post in latest_posts %}
+                <article class="post-card">
+                    <img src="{% static post.image %}" alt="{{ post.title }}" onerror="this.onerror=null;this.src='{% static 'image/placeholder.svg' %}';">
+                    <div class="post-card-body">
+                        <span class="post-meta">{{ post.category }} • {{ post.read_time }}</span>
+                        <h3>{{ post.title }}</h3>
+                        <p>{{ post.excerpt }}</p>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

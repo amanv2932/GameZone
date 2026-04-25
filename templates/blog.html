@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Blog • GameZone{% endblock %}
+{% block content %}
+<section class="page-hero">
+    <div class="container split-layout split-layout-wide">
+        <div>
+            <p class="eyebrow">Editorial layout</p>
+            <h1>Blog previews that feel more like a magazine section.</h1>
+            <p class="hero-text">The posts are still static, but each one now has stronger hierarchy, thumbnail imagery, categories, and reading-time cues.</p>
+        </div>
+        <div class="content-panel">
+            <span class="chip">{{ featured_game.tag }}</span>
+            <h2>{{ featured_game.name }}</h2>
+            <p>{{ featured_game.description }}</p>
+            <img class="panel-image" src="{% static featured_game.image %}" alt="{{ featured_game.name }}" onerror="this.onerror=null;this.src='{% static 'image/placeholder.svg' %}';">
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <article class="featured-post">
+            <img src="{% static featured_post.image %}" alt="{{ featured_post.title }}" onerror="this.onerror=null;this.src='{% static 'image/placeholder.svg' %}';">
+            <div class="featured-post-body">
+                <span class="post-meta">{{ featured_post.category }} • {{ featured_post.read_time }}</span>
+                <h2>{{ featured_post.title }}</h2>
+                <p>{{ featured_post.excerpt }}</p>
+                <a class="btn btn-secondary" href="{% url 'contactus' %}">Share Your Thoughts</a>
+            </div>
+        </article>
+    </div>
+</section>
+
+<section class="section section-contrast">
+    <div class="container">
+        <div class="posts-grid">
+            {% for post in posts %}
+                <article class="post-card">
+                    <img src="{% static post.image %}" alt="{{ post.title }}" onerror="this.onerror=null;this.src='{% static 'image/placeholder.svg' %}';">
+                    <div class="post-card-body">
+                        <span class="post-meta">{{ post.category }} • {{ post.read_time }}</span>
+                        <h3>{{ post.title }}</h3>
+                        <p>{{ post.excerpt }}</p>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

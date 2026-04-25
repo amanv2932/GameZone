@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}About • GameZone{% endblock %}
+{% block content %}
+<section class="page-hero">
+    <div class="container split-layout split-layout-wide">
+        <div>
+            <p class="eyebrow">About the project</p>
+            <h1>GameZone is a clean gaming showcase built around browsing, visuals, and variety.</h1>
+            <p class="hero-text">The site highlights well-known games across multiple genres and gives each page a more complete look with stronger layout, clearer sections, and a much larger collection than before.</p>
+        </div>
+        <div class="image-stack">
+            <img class="image-stack-main" src="{% static games.5.image %}" alt="{{ games.5.name }}" onerror="this.onerror=null;this.src='{% static 'image/placeholder.svg' %}';">
+            <img class="image-stack-accent" src="{% static games.0.image %}" alt="{{ games.0.name }}" onerror="this.onerror=null;this.src='{% static 'image/placeholder.svg' %}';">
+        </div>
+    </div>
+</section>
+
+<section class="section section-contrast">
+    <div class="container split-layout">
+        <div>
+            <p class="eyebrow">Inside GameZone</p>
+            <h2>A bigger collection with room for every kind of player</h2>
+            <div class="feature-list">
+                {% for section in about_sections %}
+                    <article class="feature-card">
+                        <h3>{{ section.title }}</h3>
+                        <p>{{ section.description }}</p>
+                    </article>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="content-panel">
+            <h3>Games included</h3>
+            <div class="tag-grid">
+                {% for game in games %}
+                    <span class="tag">{{ game.name }}</span>
+                {% endfor %}
+            </div>
+            <p class="panel-note">The gallery now stretches across a much wider lineup, from party games and racers to giant RPGs and battle royales.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section-heading">
+            <p class="eyebrow">Visual Story</p>
+            <h2>A cleaner gallery-style overview of the games inside the project</h2>
+        </div>
+        <div class="gallery-grid">
+            {% for game in games %}
+                <article class="gallery-card">
+                    <img src="{% static game.image %}" alt="{{ game.name }}" onerror="this.onerror=null;this.src='{% static 'image/placeholder.svg' %}';">
+                    <div class="gallery-card-body">
+                        <h3>{{ game.name }}</h3>
+                        <p>{{ game.genre }}</p>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
